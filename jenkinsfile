@@ -1,0 +1,26 @@
+node {
+   def antHome
+   def props = readProperties  file: 'dir/my.properties'
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+      git 'https://github.com/maryd323/jenkins2.git'
+      // Get the Maven tool.
+      // ** NOTE: This 'M3' Maven tool must be configured
+      // **       in the global configuration.           
+      antHome = tool 'Jenkins Ant'
+   }
+   stage('Build') {
+      // Run the maven build
+      if (isUnix()) {
+         sh "'${antHome}/bin/ant' makezips"
+      } else {
+         bat(/"${antHome}\bin\ant" makezips/)
+      }
+   }
+   stage('Results') {
+      archiveArtifacts 'build/dist/*.ear'
+   }
+   stage('Publish'){
+      sh "'env'"
+   }
+}
