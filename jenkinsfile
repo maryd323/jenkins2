@@ -1,25 +1,41 @@
-node {
-   def antHome
-   stage('Preparation') { // for display purposes
-      // Get some code from a GitHub repository
-      git 'https://github.com/maryd323/jenkins2.git'
-      // Get the Maven tool.
-      // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
-      antHome = tool 'Jenkins Ant'
+pipeline{
+   agent any
+   environment {
+      gitRepo           = 'https://github.com/maryd323/jenkins2.git'
+      wasPassword       = 'wpsadmin'
+      portalPassword    = 'wpsadmin'
+      appName           = 'CustomHTMLEditor'
+      earFileName       = 'CustomHTMLEditor.ear'
+      custmoWorkspace   = '${JENKINS_HOME}/buildconfig/'
    }
-   stage('Build') {
-      // Run the maven build
-      if (isUnix()) {
-         sh "'${antHome}/bin/ant' makezips"
-      } else {
-         bat(/"${antHome}\bin\ant" makezips/)
+   stages {
+      stage('Preparation') { 
+         steps {
+            git 'https://github.com/maryd323/jenkins2.git'
+         }
       }
-   }
-   stage('Results') {
-      archiveArtifacts 'build/dist/*.ear'
-   }
-   stage('Publish'){
-      sh "'env'"
+      stage('Build') {
+         steps {
+            withAnt (installation: 'JenkinsAnt') {
+               script {
+                  if (isUnix()) {
+                     sh "'${antHome}/bin/ant' makezips"
+                  } else {
+                     bat(/"${antHome}\bin\ant" makezips/)
+                  }
+               }
+            }
+         }
+      }
+      stage('Results') {
+         steps {
+            archiveArtifacts 'build/dist/*.ear'
+         }
+      }
+      stage('Publish'){
+         steps {
+            sh "'env'"
+         }
+      }
    }
 }
