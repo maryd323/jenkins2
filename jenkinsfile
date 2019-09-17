@@ -6,7 +6,7 @@ pipeline{
       portalPassword    = 'wpsadmin'
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
-      customWorkspace   = '${JENKINS_HOME}/buildconfig/'
+      antHome           = tool 'Ant'
    }
    stages {
       stage('Preparation') { 
@@ -16,7 +16,7 @@ pipeline{
       }
       stage('Build') {
          steps {
-            withAnt (installation: 'JenkinsAnt') {
+            withAnt (installation: 'Ant') {
                script {
                   if (isUnix()) {
                      sh "'${antHome}/bin/ant' makezips"
@@ -34,7 +34,9 @@ pipeline{
       }
       stage('Publish'){
          steps {
-            sh "'env'"
+            withCredentials([string(credentialsId: 'maryd323.jenkins2', variable: 'creds')]){
+               sh 'scp ${WORKSPACE}/build/dist/${earFileName} mdooley@maryd.localdomain:/opt/HCL/wp_profile/customApps/'
+            }
          }
       }
    }
