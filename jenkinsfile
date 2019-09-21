@@ -34,7 +34,7 @@ pipeline{
       }
       stage('Publish'){
          steps {
-            sh "'env'"
+          ([$class: 'CopyArtifact', projectName: 'build-app', filter: 'build/dist/*.ear']);
             }
          }
       }
