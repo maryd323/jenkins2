@@ -34,8 +34,7 @@ pipeline{
       }
       stage('Publish'){
          steps {
-            withCredentials([string(credentialsId: 'maryd323.jenkins2', variable: 'creds')]){
-               sh 'scp ${WORKSPACE}/build/dist/${earFileName} mdooley@maryd.localdomain:/opt/HCL/wp_profile/customApps/'
+            sh "'env'"
             }
          }
       }
