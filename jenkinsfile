@@ -18,11 +18,7 @@ pipeline{
          steps {
             withAnt (installation: 'Ant') {
                script {
-                  if (isUnix()) {
-                     sh "'${antHome}/bin/ant' makezips"
-                  } else {
-                     bat(/"${antHome}\bin\ant" makezips/)
-                  }
+                 sh "'${antHome}/bin/ant' makezips"
                }
             }
          }
