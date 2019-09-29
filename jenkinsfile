@@ -15,10 +15,7 @@ pipeline{
       }
       stage('Build') {
          steps {
-            ant {
-               target('makezips')
-               antInstallation('${antHome}')
-            }
+            sh "'${antHome}/bin/ant' makezips"
          }
       }
       stage('Store') {
