@@ -15,10 +15,9 @@ pipeline{
       }
       stage('Build') {
          steps {
-            withAnt (installation: 'Ant') {
-               script {
-                 sh "'${antHome}/bin/ant' makezips"
-               }
+            ant {
+               target('makezips')
+               antInstallation('${antHome}')
             }
          }
       }
@@ -30,6 +29,7 @@ pipeline{
       stage('Publish'){
          steps {
             script {
+               logLevel =
                openshift.withCluster() {
                openshift.withProject("dx-deploy-dev") {
                   //def deployment_token = 
