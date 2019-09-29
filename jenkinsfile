@@ -25,7 +25,7 @@ pipeline{
       }
       stage('Publish'){
          steps {
-            openshift.logLevel(level:10)
+            openshift.logLevel(10)
             script {
                openshift.withCluster() {
                openshift.withProject("dx-deploy-dev") {
