@@ -30,7 +30,7 @@ pipeline{
                openshift.withCluster() {
                openshift.withProject("dx-deploy-dev") {
                   withCredentials([string(credentialsId: 'jenkins-token-whgr5', variable: 'TOKEN')]){
-                     sh "'oc exec -it dx-deployment-0 /bin/bash'"
+                     sh "'kubectl exec -it dx-deployment-0 /bin/bash'"
                      sh "'ls /opt/HCL/wp_profile'"
                   }
                }
