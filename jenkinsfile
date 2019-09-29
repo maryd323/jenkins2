@@ -1,7 +1,6 @@
 pipeline{
    agent any
    environment {
-      gitRepo           = 'https://github.com/maryd323/jenkins2.git'
       wasPassword       = 'wpsadmin'
       portalPassword    = 'wpsadmin'
       appName           = 'CustomHTMLEditor'
@@ -9,7 +8,7 @@ pipeline{
       antHome           = tool 'Ant'
    }
    stages {
-      stage('Preparation') { 
+      stage('Retrieve') { 
          steps {
             git 'https://github.com/maryd323/jenkins2.git'
          }
@@ -23,14 +22,28 @@ pipeline{
             }
          }
       }
-      stage('Results') {
+      stage('Store') {
          steps {
             archiveArtifacts 'build/dist/*.ear'
          }
       }
       stage('Publish'){
          steps {
-           sh "'env'"
+            openshift.withCluster() {
+            openshift.withProject("dx-deploy-dev") {
+               //def deployment_token = 
+               withCredentials([string(credentialsId: 'maryd323', variable: 'TOKEN')]){
+                  sh '''
+                     set +x
+                     curl -H "Authorization: Bearer yLZCSj5Vgr_R2r78tJhHOSjhiRqoF1O5qsEnkH9nlfU" "https://api.hcl-dxdev.hcl-dx-dev.net:6443/apis/user.openshift.io/v1/users/~"
+                  '''
+                  //def deployment_instance = openshift.selector("pod", [ Name : "dx-deployment-0"])
+                  sh "'oc exec -it ${deployment_instance} /bin/bash'"
+                  sh "'ls /opt/HCL/wp_profile'"
+               }
+            }
+         }
+            sh "'env'"
             }
          }
       }
