@@ -26,7 +26,7 @@ pipeline{
       stage('Publish'){
          steps {
             script {
-               openshift.logLevel("10")
+               openshift.logLevel(10)
                openshift.withCluster() {
                openshift.withProject("dx-deploy-dev") {
                   withCredentials([string(credentialsId: 'maryd323', variable: 'TOKEN')]){
