@@ -26,7 +26,9 @@ pipeline{
       stage('PrePublish'){
          steps {
             withKubeConfig(clusterName: 'api-hcl-dxdev-hcl-dx-dev-net:6443', contextName: 'dx-deploy-dev/api-hcl-dxdev-hcl-dx-dev-net:6443/mary.dooley', credentialsId: 'b238eef9-f12f-4aef-97dc-6074e7ccc601', namespace: 'dx-deploy-dev', serverUrl: 'https://api.hcl-dxdev.hcl-dx-dev.net:6443') {
-               sh 'kubectl get pod dx-deployment-0'
+               withCredentials([string(credentialsId: 'jenkins-token-whgr5', variable: 'TOKEN')]){
+                  sh 'kubectl get pod dx-deployment-0'
+               }
             }
          }
       }      
