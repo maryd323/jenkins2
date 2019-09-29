@@ -24,10 +24,12 @@ pipeline{
          }
       }
       stage('PrePublish'){
-         withKubeConfig(clusterName: 'api-hcl-dxdev-hcl-dx-dev-net:6443', contextName: 'dx-deploy-dev/api-hcl-dxdev-hcl-dx-dev-net:6443', credentialsId: 'b238eef9-f12f-4aef-97dc-6074e7ccc601', namespace: 'dx-deploy-dev', serverUrl: 'api-hcl-dxdev-hcl-dx-dev-net:6443') {
-            sh 'kubectl get pods'
+         steps {
+            withKubeConfig(clusterName: 'api-hcl-dxdev-hcl-dx-dev-net:6443', contextName: 'dx-deploy-dev/api-hcl-dxdev-hcl-dx-dev-net:6443', credentialsId: 'b238eef9-f12f-4aef-97dc-6074e7ccc601', namespace: 'dx-deploy-dev', serverUrl: 'api-hcl-dxdev-hcl-dx-dev-net:6443') {
+               sh 'kubectl get pods'
+            }
          }
-               }      
+      }      
       stage('Publish'){
          steps {
             script {
@@ -43,6 +45,6 @@ pipeline{
          }
             sh "'env'"
             }
-         }
       }
    }
+}
