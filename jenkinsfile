@@ -29,7 +29,7 @@ pipeline{
                openshift.logLevel(10)
                openshift.withCluster() {
                openshift.withProject("dx-deploy-dev") {
-                  withCredentials([string(credentialsId: 'maryd323', variable: 'TOKEN')]){
+                  withCredentials([string(credentialsId: 'mary.dooley', variable: 'TOKEN')]){
                      sh '''
                         set +x
                         curl -H "Authorization: Bearer yLZCSj5Vgr_R2r78tJhHOSjhiRqoF1O5qsEnkH9nlfU" "https://api.hcl-dxdev.hcl-dx-dev.net:6443/apis/user.openshift.io/v1/users/~"
