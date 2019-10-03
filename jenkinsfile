@@ -22,17 +22,7 @@ pipeline{
          steps {
             archiveArtifacts 'build/dist/*.ear'
          }
-      }
-      stage('PrePublish'){
-         steps {
-            script {
-               step ([$class: 'CopyArtifact',
-               projectName: 'build-local-app',
-               filter: "build/dist/*.ear",
-               target: "deploy-local-app/work/"]);
-            }
-         }
-      }      
+      }    
       stage('Publish'){
          steps {
 
