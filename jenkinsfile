@@ -27,9 +27,9 @@ pipeline{
          steps {
             script {
                step ([$class: 'CopyArtifact',
-               projectName: 'build-app-local',
+               projectName: 'build-local-app',
                filter: "build/dist/*.ear",
-               target: "deploy-app-local/work/"]);
+               target: "deploy-local-app/work/"]);
             }
          }
       }      
