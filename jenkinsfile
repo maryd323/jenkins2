@@ -10,8 +10,33 @@ pipeline{
    stages {
       stage('Retrieve') { 
          steps {
+            git 'https://github.com/maryd323/jenkins2.git'
+         }
+      }
+      stage('Build') {
+         steps {
+            sh "'${antHome}/bin/ant' makezips"
+         }
+      }
+      stage('Store') {
+         steps {
+            archiveArtifacts 'build/dist/*.ear'
+         }
+      }
+      stage('PrePublish'){
+         steps {
+            script {
+               step ([$class: 'CopyArtifact',
+               projectName: 'build-app-local',
+               filter: "build/dist/*.ear",
+               target: "deploy-app-local/work/"]);
+            }
+         }
+      }      
+      stage('Publish'){
+         steps {
+
             sh "'env'"
-            sh "'pwd'"
             }
       }
    }
