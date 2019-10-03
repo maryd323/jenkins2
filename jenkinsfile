@@ -11,6 +11,7 @@ pipeline{
       stage('Retrieve') { 
          steps {
             sh "'env'"
+            sh "'pwd'"
             }
       }
    }
