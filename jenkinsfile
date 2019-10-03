@@ -10,39 +10,6 @@ pipeline{
    stages {
       stage('Retrieve') { 
          steps {
-            git 'https://github.com/maryd323/jenkins2.git'
-         }
-      }
-      stage('Build') {
-         steps {
-            sh "'${antHome}/bin/ant' makezips"
-         }
-      }
-      stage('Store') {
-         steps {
-            archiveArtifacts 'build/dist/*.ear'
-         }
-      }
-      stage('PrePublish'){
-         steps {
-            withKubeConfig(clusterName: 'api-hcl-dxdev-hcl-dx-dev-net:6443', contextName: 'dx-deploy-dev/api-hcl-dxdev-hcl-dx-dev-net:6443/mary.dooley', credentialsId: 'b238eef9-f12f-4aef-97dc-6074e7ccc601', namespace: 'dx-deploy-dev', serverUrl: 'https://api.hcl-dxdev.hcl-dx-dev.net:6443') {
-               sh 'kubectl get pod dx-deployment-0'
-            }
-         }
-      }      
-      stage('Publish'){
-         steps {
-            script {
-               openshift.logLevel(10)
-               openshift.withCluster() {
-               openshift.withProject("dx-deploy-dev") {
-                  withCredentials([string(credentialsId: 'jenkins-token-whgr5', variable: 'TOKEN')]){
-                     sh "'kubectl exec -it dx-deployment-0 /bin/bash'"
-                     sh "'ls /opt/HCL/wp_profile'"
-                  }
-               }
-            }
-         }
             sh "'env'"
             }
       }
