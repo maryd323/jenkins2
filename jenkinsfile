@@ -22,10 +22,10 @@ pipeline{
          steps {
             archiveArtifacts 'build/dist/*.ear'
          }
-      }    
+      }   
       stage('Publish'){
          steps {
-
+            build 'deploy-local-app'
             sh "'env'"
             }
       }
