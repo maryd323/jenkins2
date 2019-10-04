@@ -15,12 +15,24 @@ pipeline{
       }
       stage('Build') {
          steps {
-            sh "'${antHome}/bin/ant' makezips"
+            step {
+               sh "'${antHome}/bin/ant' makezips"
+            }
          }
       }
       stage('Store') {
          steps {
-            archiveArtifacts 'build/dist/*.ear'
+            step {
+               archiveArtifacts 'build/dist/*.ear'
+            }
+            step {
+                  script {
+                     copyArtifacts filter: 'build/dist/*.ear', 
+                     fingerprintArtifacts: true, 
+                     projectName: 'build-local-app', 
+                     selector: upstream(fallbackToLastSuccessful: true)
+               }
+            }
          }
       }   
       stage('Publish'){
