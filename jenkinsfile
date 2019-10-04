@@ -25,7 +25,7 @@ pipeline{
                script {
                   copyArtifacts filter: 'build/dist/*.ear', 
                   fingerprintArtifacts: true, 
-                  projectName: "'${thisProjectName}'", 
+                  projectName: 'build-local-app', 
                   selector: upstream(fallbackToLastSuccessful: true)
                }
          }
