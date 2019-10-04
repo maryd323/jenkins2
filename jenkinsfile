@@ -6,6 +6,7 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'Ant'
+      thisProjectName   = 'build-local-app'
    }
    stages {
       stage('Retrieve') { 
@@ -24,7 +25,7 @@ pipeline{
                script {
                   copyArtifacts filter: 'build/dist/*.ear', 
                   fingerprintArtifacts: true, 
-                  projectName: 'build-local-app', 
+                  projectName: "'${thisProjectName}'", 
                   selector: upstream(fallbackToLastSuccessful: true)
                }
          }
