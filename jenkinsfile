@@ -6,7 +6,6 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'Ant'
-      thisProjectName   = 'build-local-app'
    }
    stages {
       stage('Retrieve') { 
@@ -33,7 +32,7 @@ pipeline{
       stage('Publish'){
          steps {
             build 'deploy-local-app'
-            sh "'env'"
+            //sh "'env'"
             }
       }
    }
