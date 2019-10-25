@@ -8,7 +8,18 @@ pipeline{
       antHome           = tool 'Ant'
    }
    stages {
-      stage('Retrieve') { 
+      stage('Log Entry') { 
+         steps {
+            script {
+               openshift.withCluster() {
+                  openshift.withProject() {
+                     echo "Building: ${appName} in project: ${openshift.project()}."
+                  }
+               }
+            }
+         }
+      }      
+      stage('Checkout') { 
          steps {
             git 'https://github.com/maryd323/jenkins2.git'
          }
@@ -18,22 +29,45 @@ pipeline{
                sh "'${antHome}/bin/ant' makezips"
          }
       }
-      stage('Store') {
+      stage('Archive') {
          steps {
-               archiveArtifacts 'build/dist/*.ear'
-               script {
-                  copyArtifacts filter: 'build/dist/*.ear', 
-                  fingerprintArtifacts: true, 
-                  projectName: 'build-local-app', 
-                  selector: upstream(fallbackToLastSuccessful: true)
-               }
-         }
-      }   
-      stage('Publish'){
-         steps {
-            build 'deploy-local-app'
-            //sh "'env'"
+            archiveArtifacts 'build/dist/*.ear'
+            script {
+               copyArtifacts filter: 'build/dist/*.ear', 
+               fingerprintArtifacts: true, 
+               projectName: 'build-custom-editor-app', 
+               selector: upstream(fallbackToLastSuccessful: true)
             }
-      }
+         }
+      } 
+      stage('Deliver') {
+         steps {
+            script {
+               openshift.withCluster() {
+                  openshift.withProject() {
+                  def result = openshift.raw ( 'cp', 'local.file dest.dir')
+                  echo "Delivery Status:  ${result.out}"
+                  }
+               }
+            }
+         }
+      }        
+//      stage('Deploy'){
+//         steps {
+//            build 'deploy-custom-editor-app'
+//            //sh "'env'"
+//            }
+//      }
+      stage('Log Exit') { 
+         steps {
+            script {
+               openshift.withCluster() {
+                  openshift.withProject() {
+                     echo "Completed build, deployment and delivery of ${appName} in project: ${openshift.project()}."
+                  }
+               }
+            }
+         }
+      }  
    }
 }
