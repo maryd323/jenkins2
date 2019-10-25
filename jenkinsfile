@@ -33,12 +33,6 @@ pipeline{
          steps {
             archiveArtifacts 'build/dist/*.ear'
             sh "'env'"
-            script {
-               copyArtifacts filter: 'build/dist/*.ear', 
-               fingerprintArtifacts: true, 
-               projectName: 'dx-deploy-dev-custom-editor-app-pipeline', 
-               selector: upstream(fallbackToLastSuccessful: true)
-            }
          }
       } 
       stage('Deliver') {
@@ -46,7 +40,7 @@ pipeline{
             script {
                openshift.withCluster() {
                   openshift.withProject() {
-                  def result = openshift.raw ( 'cp', 'local.file dest.dir')
+                  def result = openshift.raw ( 'cp', '${WORKSPACE}/build/dist/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
                   echo "Delivery Status:  ${result.out}"
                   }
                }
