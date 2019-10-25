@@ -32,10 +32,11 @@ pipeline{
       stage('Archive') {
          steps {
             archiveArtifacts 'build/dist/*.ear'
+            sh "'env'"
             script {
                copyArtifacts filter: 'build/dist/*.ear', 
                fingerprintArtifacts: true, 
-               projectName: 'build-custom-editor-app', 
+               projectName: 'dx-deploy-dev-custom-editor-app-pipeline', 
                selector: upstream(fallbackToLastSuccessful: true)
             }
          }
