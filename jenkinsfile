@@ -21,7 +21,7 @@ pipeline{
       }      
       stage('Checkout') { 
          steps {
-            git 'https://github.com/maryd323/jenkins2.git'
+            git 'http://github.com/maryd323/jenkins2.git'
          }
       }
       stage('Build') {
