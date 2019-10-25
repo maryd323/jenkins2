@@ -5,7 +5,7 @@ pipeline{
       portalPassword    = 'wpsadmin'
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
-      antHome           = tool 'Ant'
+      antHome           = tool 'JenkinsAnt'
    }
    stages {
       stage('Log Entry') { 
