@@ -32,7 +32,7 @@ pipeline{
       stage('Archive') {
          steps {
             archiveArtifacts 'build/dist/*.ear'
-            sh "'env'"
+            //sh "'env'"
          }
       } 
       stage('Deliver') {
@@ -49,8 +49,8 @@ pipeline{
       }        
 //      stage('Deploy'){
 //         steps {
+//            sh "'env'"
 //            build 'deploy-custom-editor-app'
-//            //sh "'env'"
 //            }
 //      }
       stage('Log Exit') { 
@@ -58,7 +58,7 @@ pipeline{
             script {
                openshift.withCluster() {
                   openshift.withProject() {
-                     echo "Completed build, deployment and delivery of ${appName} in project: ${openshift.project()}."
+                     echo "Completed build, delivery and deployment of ${appName} in project: ${openshift.project()}."
                   }
                }
             }
