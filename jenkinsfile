@@ -53,9 +53,7 @@ pipeline{
             sh "'env'"
             script {
                copyArtifacts filter: '${custom_app_workspace}/build/dist/${earFileName}', 
-               fingerprintArtifacts: true, 
-               projectName: 'dx-deploy-dev', 
-               target: '',
+               fingerprintArtifacts: true,
                selector: upstream(fallbackToLastSuccessful: true)
             }
             build 'deploy-custom-editor-app'
