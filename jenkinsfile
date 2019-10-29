@@ -47,7 +47,7 @@ pipeline{
       stage('Deploy'){
          steps {
                script {
-               copyArtifacts filter: '**/build/dist/${earFileName}', 
+               copyArtifacts filter: '/build/dist/${earFileName}', 
                fingerprintArtifacts: true, 
                projectName: 'dx-deploy-dev-custom-editor-app-pipeline', 
                target: '',
