@@ -27,6 +27,11 @@ pipeline{
                sh "'${antHome}/bin/ant' clean makezips"
          }
       }
+      stage('Archive') {
+         steps {
+            archiveArtifacts 'build/dist/*.ear'
+         }
+      }      
       stage('Deliver') {
          steps {
             script {
@@ -41,7 +46,6 @@ pipeline{
       }        
       stage('Deploy'){
          steps {
-            //sh "'env'"
             build 'deploy-custom-editor-app'
             }
       }
@@ -56,14 +60,5 @@ pipeline{
             }
          }
       }        
-   }
-   post {
-      always {
-         echo 'Archiving artifacts'
-         script{
-         archiveArtifacts 'build/dist/*.ear'
-         //sh "'env'"
-         }
-      }
-   }    
+   }  
 }
