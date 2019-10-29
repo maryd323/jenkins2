@@ -6,7 +6,7 @@ pipeline{
       antHome           = tool 'JenkinsAnt'
    }
    options {
-      //Value needs to match the name of the application deploy job created in Jenkins GUI
+      //Value needs to match the name of the downstream application deploy job created in the Jenkins console.
       copyArtifactPermission('deploy-custom-editor-app') 
    }   
    stages {
@@ -51,7 +51,7 @@ pipeline{
       }        
       stage('Deploy'){
          steps {
-            sh "'pwd'"
+            //Value needs to match the name of the downstream application deploy job created in the Jenkins console.
             build 'deploy-custom-editor-app'
             }
       }
