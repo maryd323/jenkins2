@@ -50,12 +50,7 @@ pipeline{
       }        
       stage('Deploy'){
          steps {
-            sh "'env'"
-            script {
-               copyArtifacts filter: '${custom_app_workspace}/build/dist/${earFileName}', 
-               fingerprintArtifacts: true,
-               selector: upstream(fallbackToLastSuccessful: true)
-            }
+            //sh "'env'"
             build 'deploy-custom-editor-app'
             }
       }
