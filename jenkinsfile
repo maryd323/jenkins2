@@ -1,8 +1,8 @@
 pipeline{
    agent any
    environment {
-      wasPassword       = 'wpsadmin'
-      portalPassword    = 'wpsadmin'
+      //wasPassword       = 'wpsadmin'
+      //portalPassword    = 'wpsadmin'
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
