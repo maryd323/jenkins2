@@ -1,5 +1,8 @@
 pipeline{
    agent any
+   options {
+      copyArtifactPermission('deploy-custom-editor-app');
+   }
    environment {
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
