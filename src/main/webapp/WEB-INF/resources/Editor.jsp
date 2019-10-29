@@ -82,7 +82,7 @@
             extraKeys: {"Ctrl-Space": "autocomplete"},
             wcmPluginDefn: pluginDefn
       });
-      editor.setSize("100%", (targetTextArea.rows * 15));
+      editor.setSize("100%", (targetTextArea.rows * 20));
       var codeMirrorEditor = new ibm.sample.authoring.CodeMirrorSample('<%= docId %>', editor);
       codeMirrorEditor.showToolbar(true);
    });
