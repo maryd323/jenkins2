@@ -6,7 +6,7 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
-      custom_app_workspace   =  "${WORKSPACE}"
+      //custom_app_workspace   =  "${WORKSPACE}"
    }
    stages {
       stage('Log Entry') { 
@@ -41,7 +41,7 @@ pipeline{
             script {
                openshift.withCluster() {
                   openshift.withProject() {
-                  def result = openshift.raw ( 'cp', '${custom_app_workspace}/build/dist/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
+                  def result = openshift.raw ( 'cp', '${WORKSPACE}/build/dist/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
                   echo "Delivery Status:  ${result.out}"
                   }
                }
