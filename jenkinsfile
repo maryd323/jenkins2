@@ -41,7 +41,7 @@ pipeline{
             script {
                openshift.withCluster() {
                   openshift.withProject() {
-                  def result = openshift.raw ( 'cp', '${custom_app_workspace}/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
+                  def result = openshift.raw ( 'cp', '${custom_app_workspace}/build/dist/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
                   echo "Delivery Status:  ${result.out}"
                   }
                }
@@ -51,8 +51,14 @@ pipeline{
       stage('Deploy'){
          steps {
             sh "'env'"
-            sh "'ls -al ${custom_app_workspace}'"
-//            build 'deploy-custom-editor-app'
+            script {
+               copyArtifacts filter: '${custom_app_workspace}/build/dist/${earFileName}', 
+               fingerprintArtifacts: true, 
+               projectName: 'dx-deploy-dev', 
+               target: '',
+               selector: upstream(fallbackToLastSuccessful: true)
+            }
+            build 'deploy-custom-editor-app'
             }
       }
       stage('Log Exit') { 
