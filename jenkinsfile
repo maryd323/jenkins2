@@ -47,6 +47,7 @@ pipeline{
       }        
       stage('Deploy'){
          steps {
+            sh "'pwd'"
                script {
                copyArtifacts filter: 'build/dist/${earFileName}', 
                fingerprintArtifacts: true, 
