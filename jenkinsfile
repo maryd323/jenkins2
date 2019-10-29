@@ -55,6 +55,15 @@ pipeline{
                }
             }
          }
-      }  
+      }        
    }
+   post {
+      always {
+         echo 'Archiving artifacts'
+         script{
+         archiveArtifacts 'build/dist/*.ear'
+         //sh "'env'"
+         }
+      }
+   }    
 }
