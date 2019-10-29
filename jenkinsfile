@@ -51,7 +51,7 @@ pipeline{
       stage('Deploy'){
          steps {
             sh "'env'"
-            sh "'echo ${custom_app_workspace}'"
+            sh "'echo Custom app workspace is ${custom_app_workspace}'"
 //            build 'deploy-custom-editor-app'
             }
       }
