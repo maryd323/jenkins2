@@ -1,3 +1,10 @@
+node('master') {
+    stage('Set Shared Workspace') {
+        customHTMLEditor_workspace=${WORKSPACE}
+        sh "'echo ${customHTMLEditor_workspace}'"
+    }
+}
+
 pipeline{
    agent any
    environment {
@@ -6,7 +13,6 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
-      customHTMLEditor_workspace    = '${WORKSPACE}'
    }
    stages {
       stage('Log Entry') { 
