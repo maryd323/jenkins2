@@ -52,6 +52,7 @@ pipeline{
       stage('Deploy'){
          steps {
             //Value needs to match the name of the downstream application deploy job created in the Jenkins console.
+            sh "'pwd'"
             build 'deploy-custom-editor-app'
             }
       }
