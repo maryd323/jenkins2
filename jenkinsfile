@@ -46,6 +46,7 @@ pipeline{
       }        
       stage('Deploy'){
          steps {
+            sh "'env'"
             build 'deploy-custom-editor-app'
             }
       }
