@@ -1,7 +1,7 @@
 pipeline{
    agent any
    parameters {
-      string(name: 'custom_app_workspace', defaultValue: '${WORKSPACE}', description: 'Shared Workspace Directory')
+      string(name: 'custom_app_workspace', defaultValue: "${WORKSPACE}", description: 'Shared Workspace Directory')
    }
    environment {
       wasPassword       = 'wpsadmin'
