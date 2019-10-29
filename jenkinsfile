@@ -1,12 +1,8 @@
-node('master') {
-    stage('Set Shared Workspace') {
-        customHTMLEditor_workspace=${WORKSPACE}
-        sh "'echo ${customHTMLEditor_workspace}'"
-    }
-}
-
 pipeline{
    agent any
+   parameters {
+      string(name: 'custom_app_workspace', defaultValue: '${WORKSPACE}', description: 'Shared Workspace Directory')
+   }
    environment {
       wasPassword       = 'wpsadmin'
       portalPassword    = 'wpsadmin'
