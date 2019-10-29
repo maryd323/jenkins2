@@ -4,9 +4,10 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
+      deploy_job_name   = 'deploy-custom-editor-app'
    }
    options {
-      copyArtifactPermission('deploy-custom-editor-app');
+      copyArtifactPermission("${deploy_job_name}");
    }   
    stages {
       stage('Log Entry') { 
