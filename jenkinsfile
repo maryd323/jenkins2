@@ -1,11 +1,12 @@
 pipeline{
-   agent any
+   agent master
    environment {
       wasPassword       = 'wpsadmin'
       portalPassword    = 'wpsadmin'
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
+      customHTMLEditor_workspace    = ${WORKSPACE}
    }
    stages {
       stage('Log Entry') { 
@@ -47,12 +48,12 @@ pipeline{
             }
          }
       }        
-//      stage('Deploy'){
-//         steps {
-//            sh "'env'"
+      stage('Deploy'){
+         steps {
+            sh "'env'"
 //            build 'deploy-custom-editor-app'
-//            }
-//      }
+            }
+      }
       stage('Log Exit') { 
          steps {
             script {
