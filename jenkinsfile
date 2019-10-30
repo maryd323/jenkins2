@@ -4,6 +4,8 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
+      dx_instance_name  = 'dx-deployment-0'
+      app_binary_path   = '/opt/HCL/wp_profile/customApps/'
    }
    options {
       //Value needs to match the name of the downstream application deploy job created in the Jenkins console.
@@ -34,7 +36,6 @@ pipeline{
       stage('Archive') {
          steps {
             archiveArtifacts 'build/dist/*.ear'
-            sh "'pwd'"
          }
       }      
       stage('Deliver') {
@@ -42,7 +43,7 @@ pipeline{
             script {
                openshift.withCluster() {
                   openshift.withProject() {
-                  def result = openshift.raw ( 'cp', '${WORKSPACE}/build/dist/${earFileName} dx-deployment-0:/opt/HCL/wp_profile/customApps/')
+                  def result = openshift.raw ( 'cp', '${WORKSPACE}/build/dist/${earFileName} ${dx_instance_name}:${app_binary_path}')
                   echo "Delivery Status:  ${result.out}"
                   }
                }
