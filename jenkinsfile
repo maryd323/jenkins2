@@ -4,7 +4,9 @@ pipeline{
       appName           = 'CustomHTMLEditor'
       earFileName       = 'CustomHTMLEditor.ear'
       antHome           = tool 'JenkinsAnt'
+      //Name of the pod to which the application binaries will be copied
       dx_instance_name  = 'dx-deployment-0'
+      //Path location within DX to where to the applciation binaries will be copied
       app_binary_path   = '/opt/HCL/wp_profile/customApps/'
    }
    options {
